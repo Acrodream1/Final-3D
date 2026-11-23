@@ -6,6 +6,21 @@ TODO.
 ### Milestone 2
 TODO.
 
+## Playtesting Reports
+### Milestone 1
+#### Report 1
+TODO.
+
+#### Report 2
+TODO.
+
+### Milestone 2
+#### Report 1
+TODO.
+
+#### Report 2
+TODO.
+
 ## Open-Source Assets
 - [Ground textures and skybox](https://assetstore.unity.com/packages/3d/environments/landscapes/mountain-stylized-fantasy-environment-307488)
 - [Quirky animals and animations](https://assetstore.unity.com/packages/3d/characters/animals/quirky-series-free-animals-pack-178235)
