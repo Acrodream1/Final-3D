@@ -42,10 +42,17 @@ public class Player : MonoBehaviour
         //      and horizontal input.
         float vertical = Input.GetAxis("Vertical");
         float horizontal = Input.GetAxis("Horizontal");
-        
+
+        // Moves the player relative to their position
+        transform.Translate(
+            ((vertical * Vector3.forward) + (horizontal * Vector3.right)) * 
+            _moveSpeed * 
+            Time.deltaTime
+        );    
 
         // This rotates the ball as you move.
         // You don't need to change this code.
+
         _ballRigidbody.AddTorque((
             ((horizontal + mouseX * _mouseSensitivity) * transform.forward) +
             (vertical * transform.right))
@@ -56,4 +63,6 @@ public class Player : MonoBehaviour
     // ------------------------------------------------------------------------
     // Utilize a COLLISION method to prevent the player from double jumping.
     // The player should only be able to jump after making contact with the ground.
+    
+    
 }

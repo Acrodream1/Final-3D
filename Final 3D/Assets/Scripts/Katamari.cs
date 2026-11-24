@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -14,10 +15,16 @@ public class Katamari : MonoBehaviour
     //      objects we've collected named _katamariCollection.
     // Then, uncomment the code in SetSpherePosition().
 
+    private List<Collectable> _katamariCollection;
+
     // ------------------------------------------------------------------------
     // There's probably a member variable you need to declare in a built-in
     //      Unity method that runs once, before Update starts...
-    
+
+    private void Start()
+    {
+        
+    }
 
     // ------------------------------------------------------------------------
     private void OnTriggerEnter(Collider otherCollider)
@@ -26,19 +33,34 @@ public class Katamari : MonoBehaviour
         // Modify this if statement to ALSO check and make sure the Collectable
         //      actually exists, since we might collide with other kinds of objects too.
 
-        if(otherCollider.bounds.extents.magnitude <= _katamariCollider.bounds.extents.magnitude) {
+        Collectable collectComponent = otherCollider.GetComponent<Collectable>();
+
+        if(otherCollider.bounds.extents.magnitude <= _katamariCollider.bounds.extents.magnitude
+            && collectComponent != null    
+        ) 
+        {
+
             // Grow the SPHERE OBJECT, which should be a CHILD of the Katamari object,
             //      by _radiusGrowAmount.
+            
+            // Get the child of the sphere using _sphereTransform.GetChild(0);
+
             // AFTER growing the sphere, call SetSpherePosition() to update the sphere's position.
+            SetSpherePosition();
 
             // Add the new Collectable to our list of hit objects.
-            
+            _katamariCollection.Add(collectComponent);
 
             // Tell the Collectable that we want to collect it.
+            collectComponent.Collect();
 
             // If the object has an NPC Component, let it know about being collected
             //      by calling PickUp on the NPC.
-            
+            NPC npc = otherCollider.GetComponent<NPC>();
+            if (npc != null)
+            {
+                npc.PickUp();
+            }
 
             _equipAudioSource.Play();
         }
@@ -51,11 +73,15 @@ public class Katamari : MonoBehaviour
         //  katamari collection.
         if(collision.gameObject.tag.Equals("Obstacle"))
         {
+
             // SHRINK the katamari SPHERE by _radiusGrowAmount.
-            // AFTER changing its size, call SetSpherePosition() to fix its position.
             
+            SetSpherePosition();
+
 
             // Grab a RANDOM member of our katamari collection.
+            int range; // Fetch a random integer between 0 and _katamariCollection.len();
+
             // Generate a position to drop it at- preferably by launching it far above the katamari sphere.
             // Then, DROP that Collectable.
 
@@ -72,7 +98,7 @@ public class Katamari : MonoBehaviour
     // This method sets up the sphere to be in the corret position in front
     //      of the player, and ensures all of the objects inside the katamari
     //      remain in its center.
-    /*
+    
     private void SetSpherePosition ()
     {
         // place the sphere in front of the player
@@ -93,5 +119,5 @@ public class Katamari : MonoBehaviour
             }
         }
     }
-    */
+    
 }
